@@ -25,3 +25,15 @@ function palindromeCheckSecond (string) {
   return coincidence
 }
 
+function retrievesNumbers(string) {
+  let numberString = '';
+  let newString = string.toString();
+  for (let i = 0; i < newString.length; i++) {
+    if (!Number.isNaN(parseInt(newString[i]))) {
+      numberString += newString[i]
+    }
+  }
+  return parseInt(numberString)
+}
+
+
