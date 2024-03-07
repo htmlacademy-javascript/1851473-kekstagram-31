@@ -36,4 +36,18 @@ function retrievesNumbers(string) {
   return parseInt(numberString)
 }
 
+function getTimeMinutes (timeString) {
+  let arr = timeString.split(':');
+  return +arr[0] * 60 + +arr[1]
+}
 
+function checkWorkingDay(startWorkDay, endWorkDay, start, duration) {
+  let startWorkMinutes = getTimeMinutes(startWorkDay);
+  let endWorkMinutes = getTimeMinutes(endWorkDay);
+  let startMinutes = getTimeMinutes(start);
+
+  if (startMinutes < startWorkMinutes || startMinutes > endWorkMinutes || endWorkMinutes < startMinutes + duration) {
+    return false
+  }
+  return true
+}
