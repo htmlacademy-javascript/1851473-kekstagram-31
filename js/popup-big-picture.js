@@ -10,6 +10,8 @@ function openPopup(itemObject) {
   createListComment(itemObject.comments)
   const descPicture = document.querySelector('.social__caption');
   descPicture.textContent = itemObject.description;
+  document.querySelector('.social__comment-count').classList.add('hidden');
+  document.querySelector('.comments-loader').classList.add('hidden');
 }
 
 function createListComment (arr) {
