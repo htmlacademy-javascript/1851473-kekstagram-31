@@ -12,6 +12,7 @@ function openPopup(itemObject) {
   descPicture.textContent = itemObject.description;
   document.querySelector('.social__comment-count').classList.add('hidden');
   document.querySelector('.comments-loader').classList.add('hidden');
+  document.querySelector('body').classList.add('modal-open');
 }
 
 function createListComment (arr) {
