@@ -1,2 +1,3 @@
 import { getArrayPictures } from './object-pictures.js';
-import './moke-picture.js';
+import { createPictures } from './moke-picture.js';
+createPictures(getArrayPictures());
