@@ -1,65 +1,90 @@
+import {isEscapeKey} from './util.js'
+
+const NUMBER_COMMENTS_DISPLAYED = 5;
+let minNumber = 0;
+let maxNumber = NUMBER_COMMENTS_DISPLAYED;
+let arrComments = []
+
+
 function openPopup(itemObject) {
   const modal = document.querySelector('.big-picture');
   modal.classList.remove('hidden');
-  const image = modal.querySelector('.big-picture__img img');
-  image.src = itemObject.url;
-  const like = modal.querySelector('.likes-count');
-  like.textContent = itemObject.likes;
-  const commentNumber = modal.querySelector('.social__comment-total-count');
-  commentNumber.textContent = itemObject.comments.length;
-  createListComment(itemObject.comments)
-  const descPicture = document.querySelector('.social__caption');
-  descPicture.textContent = itemObject.description;
-  document.querySelector('.social__comment-count').classList.add('hidden');
-  document.querySelector('.comments-loader').classList.add('hidden');
+
+  modal.querySelector('.big-picture__img img').src = itemObject.url;
+
+  modal.querySelector('.likes-count').textContent = itemObject.likes;
+
+  modal.querySelector('.social__comment-total-count').textContent = itemObject.comments.length;
+
+  document.querySelector('.social__comments').innerHTML = '';
+  createListComment(itemObject.comments, minNumber, maxNumber);
+
+  document.querySelector('.social__caption').textContent = itemObject.description;
+
   document.querySelector('body').classList.add('modal-open');
+
+  document.addEventListener('keydown', handlerEscKeydown);
+
+  arrComments = itemObject.comments;
+  document.querySelector('.comments-loader').addEventListener('click', btnLoaderHeandler)
 }
 
 function closePopup () {
+  minNumber = 0;
+  maxNumber = NUMBER_COMMENTS_DISPLAYED;
   document.querySelector('.big-picture').classList.add('hidden');
   document.querySelector('body').classList.remove('modal-open');
+  document.removeEventListener('keydown', handlerEscKeydown);
+  document.querySelector('.comments-loader').removeEventListener('click', btnLoaderHeandler);
 }
 
-document.addEventListener('keydown', (evt) => {
+function handlerEscKeydown (evt) {
   if (isEscapeKey(evt)) {
     evt.preventDefault();
     closePopup();
   }
-});
+}
 
-function createListComment (arr) {
+function createListComment (arr, min, max) {
   const list = document.querySelector('.social__comments');
-  list.innerHTML = '';
+  const comentsShowCount = document.querySelector('.social__comment-shown-count');
 
-  arr.forEach((object) => {
-    const item = document.createElement('li');
-    item.classList.add('social__comment');
-    // создаем и наполняем <img>
-    const image = document.createElement('img');
-    image.classList.add('social__picture');
-    image.src = object.avatar;
-    image.alt = object.name;
-    // тут я понял что нужно было скопировать 'li'
-    image.width = '35';
-    image.height = '35';
-    item.appendChild(image);
-    // создаем и наполняем <p>
-    const desc = document.createElement('p');
-    desc.classList.add('social__text');
-    desc.textContent = object.message;
-    item.appendChild(desc);
-    // добавляем наполненный item в список
-    list.appendChild(item);
+  if (arr.length <= max) {
+    comentsShowCount.textContent = arr.length;
+    document.querySelector('.comments-loader').classList.add('hidden');
+  } else {
+    comentsShowCount.textContent = max;
+    document.querySelector('.comments-loader').classList.remove('hidden');
+  };
+
+  arr.forEach( function (object, index) {
+    if (index < max && index >= min) {
+      const item = document.createElement('li');
+      item.classList.add('social__comment');
+      // создаем и наполняем <img>
+      const image = document.createElement('img');
+      image.classList.add('social__picture');
+      image.src = object.avatar;
+      image.alt = object.name;
+      // тут я понял что нужно было скопировать 'li'
+      image.width = '35';
+      image.height = '35';
+      item.appendChild(image);
+      // создаем и наполняем <p>
+      const desc = document.createElement('p');
+      desc.classList.add('social__text');
+      desc.textContent = object.message;
+      item.appendChild(desc);
+      // добавляем наполненный item в список
+      list.appendChild(item);
+    }
   });
 }
 
-export {openPopup};
+function btnLoaderHeandler () {
+  minNumber += NUMBER_COMMENTS_DISPLAYED;
+  maxNumber += NUMBER_COMMENTS_DISPLAYED;
+  createListComment(arrComments, minNumber, maxNumber);
+}
 
-/* <li class="social__comment">
-  <img
-    class="social__picture"
-    src="{{аватар}}"
-    alt="{{имя комментатора}}"
-    width="35" height="35">
-  <p class="social__text">{{текст комментария}}</p>
-</li> */
+export {openPopup};

@@ -32,4 +32,6 @@ function getRandomArrayElement(array) {
   return array[i]
 }
 
-export {getRandomInteger, createRandomIdFromRangeGenerator, getRandomArrayElement};
+const isEscapeKey = (evt) => evt.key === 'Escape';
+
+export {getRandomInteger, createRandomIdFromRangeGenerator, getRandomArrayElement, isEscapeKey};
