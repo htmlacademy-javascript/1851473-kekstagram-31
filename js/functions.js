@@ -51,3 +51,5 @@ function checkWorkingDay(startWorkDay, endWorkDay, start, duration) {
   }
   return true
 }
+
+const isEscapeKey = (evt) => evt.key === 'Escape';

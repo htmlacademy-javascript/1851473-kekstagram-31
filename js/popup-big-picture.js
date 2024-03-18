@@ -15,6 +15,18 @@ function openPopup(itemObject) {
   document.querySelector('body').classList.add('modal-open');
 }
 
+function closePopup () {
+  document.querySelector('.big-picture').classList.add('hidden');
+  document.querySelector('body').classList.remove('modal-open');
+}
+
+document.addEventListener('keydown', (evt) => {
+  if (isEscapeKey(evt)) {
+    evt.preventDefault();
+    closePopup();
+  }
+});
+
 function createListComment (arr) {
   const list = document.querySelector('.social__comments');
   list.innerHTML = '';
