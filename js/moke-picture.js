@@ -1,3 +1,4 @@
+import {openPopup} from './popup-big-picture.js'
 
 function createPictures (arr) {
 
@@ -8,15 +9,18 @@ function createPictures (arr) {
 
 
   arr.forEach((item) => {
-    const element = templateLink.cloneNode(true);
-    const image = element.querySelector('.picture__img');
-    const like = element.querySelector('.picture__likes');
-    const comment = element.querySelector('.picture__comments');
+    const elementLink = templateLink.cloneNode(true);
+    elementLink.addEventListener('click', function() {
+      openPopup(item);
+    })
+    const image = elementLink.querySelector('.picture__img');
+    const like = elementLink.querySelector('.picture__likes');
+    const comment = elementLink.querySelector('.picture__comments');
     image.src = item.url;
     image.alt = item.description;
     like.textContent = item.likes;
     comment.textContent = item.comments.length;
-    fragment.appendChild(element);
+    fragment.appendChild(elementLink);
   });
 
   pictures.appendChild(fragment);
