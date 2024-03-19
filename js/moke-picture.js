@@ -1,4 +1,4 @@
-import {openPopup} from './popup-big-picture.js'
+import {openPopup} from './popup-big-picture.js';
 
 function createPictures (arr) {
 
@@ -24,5 +24,5 @@ function createPictures (arr) {
   });
 
   pictures.appendChild(fragment);
-}
+};
 export {createPictures};
