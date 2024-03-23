@@ -2,6 +2,7 @@ import {isEscapeKey} from './util.js';
 const HASTAG = /^#[a-zа-яё0-9]{1,19}$/i;
 const form = document.querySelector('.img-upload__form');
 const hastagInput = document.querySelector('.text__hashtags');
+const commentInput = document.querySelector('.text__description');
 
 
 const pristine = new Pristine(form, {
@@ -14,8 +15,8 @@ const pristine = new Pristine(form, {
 
 }, false);
 
-function validateHastag (value) {
-  let hastags = value.trim().split(' ');
+function validateHastag (valueHastagInput) {
+  let hastags = valueHastagInput.trim().split(' ');
     console.log(hastags)
     for (let i = 0; i < hastags.length - 1; i++) {
       for (let j = i + 1; j < hastags.length; j++) {
@@ -51,12 +52,27 @@ function handlerFocusEsc (evt) {
     evt.stopPropagation();
   }
 }
-hastagInput.addEventListener('keydown', handlerFocusEsc)
+hastagInput.addEventListener('keydown', handlerFocusEsc);
 
 
 pristine.addValidator(hastagInput,validateHastag, 'Неккоректное значение');
 
-form.addEventListener('submit', (evt) => {
-  evt.preventDefault();
-  pristine.validate();
-});
+
+// function validateComments (valueComments) {
+//   if (valueComments > 140) {
+//     return false
+//   }
+//   return true
+// };
+
+commentInput.addEventListener('keydown', handlerFocusEsc);
+// pristine.addValidator(commentInput,validateComments, 'Сообщение слишком длинное');
+
+
+function onFormSubmit () {
+  form.addEventListener('submit', (evt) => {
+    evt.preventDefault();
+    pristine.validate();
+  });
+};
+export {onFormSubmit};
