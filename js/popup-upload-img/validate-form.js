@@ -1,4 +1,4 @@
-import {isEscapeKey} from './util.js';
+import {isEscapeKey} from '../util.js';
 const HASTAG = /^#[a-zа-яё0-9]{1,19}$/i;
 const form = document.querySelector('.img-upload__form');
 const hastagInput = document.querySelector('.text__hashtags');
