@@ -1,6 +1,7 @@
 import {isEscapeKey} from '../util.js';
 import {onFormSubmit} from './validate-form.js';
-import {onSizeImage} from './create-slider.js';
+import {onSizeImage} from './change-size-image.js';
+import {filterRangeSlider} from './create-slider.js';
 
 let btnDownloaderImg = document.querySelector('.img-upload__input');
 let btnCloseFilterImg = document.querySelector('.img-upload__cancel');
@@ -13,6 +14,7 @@ function onOpenPopupForm () {
     btnCloseFilterImg.addEventListener('click', closeFilterImg);
     onFormSubmit();
     onSizeImage();
+    filterRangeSlider();
   })
 };
 
