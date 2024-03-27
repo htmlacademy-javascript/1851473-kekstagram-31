@@ -2,6 +2,7 @@ const sliderElement = document.querySelector('.effect-level__slider');
 const sliderInput = document.querySelector('.effect-level__value');
 const filtersRadio = document.querySelectorAll('.effects__radio');
 const imagePreview = document.querySelector('.img-upload__preview img');
+const rangeFilter = document.querySelector('.img-upload__effect-level');
 
 
 
@@ -27,7 +28,8 @@ function filterRangeSlider () {
     },
   });
 
-  document.querySelector('.img-upload__effect-level').classList.add('hidden');
+  rangeFilter.classList.add('hidden');
+  console.log('ghbdtn');
 
   sliderElement.noUiSlider.on('update', function () {
     sliderInput.value = sliderElement.noUiSlider.get();
@@ -37,19 +39,35 @@ function filterRangeSlider () {
     filterRadio.addEventListener('change', function (evt) {
       const nameEffect = filterRadio.value;
 
-      if (nameEffect == 'chrome') {
+      if (nameEffect === 'chrome') {
+        sliderElement.noUiSlider.updateOptions({
+          range: {
+            min: 0,
+            max: 1,
+          },
+          start: 1,
+          step: 0.1
+        });
         sliderElement.noUiSlider.on('update', function () {
           sliderInput.value = sliderElement.noUiSlider.get();
           imagePreview.style.filter = `grayscale(${sliderInput.value})`;
         });
-        document.querySelector('.img-upload__effect-level').classList.remove('hidden');
-      }  else if (nameEffect == 'sepia') {
+        rangeFilter.classList.remove('hidden');
+      }  else if (nameEffect === 'sepia') {
+        sliderElement.noUiSlider.updateOptions({
+          range: {
+            min: 0,
+            max: 1,
+          },
+          start: 1,
+          step: 0.1
+        });
         sliderElement.noUiSlider.on('update', function () {
           sliderInput.value = sliderElement.noUiSlider.get();
           imagePreview.style.filter = `sepia(${sliderInput.value})`;
         });
-        document.querySelector('.img-upload__effect-level').classList.remove('hidden');
-      } else if (nameEffect == 'marvin') {
+        rangeFilter.classList.remove('hidden');
+      } else if (nameEffect === 'marvin') {
         sliderElement.noUiSlider.updateOptions({
           range: {
             min: 0,
@@ -62,39 +80,46 @@ function filterRangeSlider () {
           sliderInput.value = sliderElement.noUiSlider.get();
           imagePreview.style.filter = `invert(${sliderInput.value}%)`;
         });
-        document.querySelector('.img-upload__effect-level').classList.remove('hidden');
-      } else if (nameEffect == 'phobos') {
+        rangeFilter.classList.remove('hidden');
+      } else if (nameEffect === 'phobos') {
         sliderElement.noUiSlider.updateOptions({
           range: {
             min: 0,
             max: 3
           },
-          start: 3
+          start: 3,
+          step: 0.1
         });
         sliderElement.noUiSlider.on('update', function () {
           sliderInput.value = sliderElement.noUiSlider.get();
           imagePreview.style.filter = `blur(${sliderInput.value}px)`;
         });
-        document.querySelector('.img-upload__effect-level').classList.remove('hidden');
-      } else if (nameEffect == 'heat') {
+        rangeFilter.classList.remove('hidden');
+      } else if (nameEffect === 'heat') {
         sliderElement.noUiSlider.updateOptions({
           range: {
             min: 0,
             max: 3
           },
-          start: 3
+          start: 3,
+          step: 0.1
         });
         sliderElement.noUiSlider.on('update', function () {
           sliderInput.value = sliderElement.noUiSlider.get();
           imagePreview.style.filter = `brightness(${sliderInput.value})`;
         });
-        document.querySelector('.img-upload__effect-level').classList.remove('hidden');
+        rangeFilter.classList.remove('hidden');
       } else {
         imagePreview.style.filter = null;
-        document.querySelector('.img-upload__effect-level').classList.add('hidden');
+        rangeFilter.classList.add('hidden');
       }
     })
   });
+};
+
+function removeFilterRangeSlider () {
+  sliderElement.noUiSlider.destroy();
+  imagePreview.style.filter = null;
 }
 
-export {filterRangeSlider};
+export {filterRangeSlider, removeFilterRangeSlider};
