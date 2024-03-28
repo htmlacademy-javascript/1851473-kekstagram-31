@@ -10,9 +10,9 @@ function createPictures (arr) {
 
   arr.forEach((item) => {
     const elementLink = templateLink.cloneNode(true);
-    elementLink.addEventListener('click', function() {
+    elementLink.addEventListener('click', () => {
       openPopup(item);
-    })
+    });
     const image = elementLink.querySelector('.picture__img');
     const like = elementLink.querySelector('.picture__likes');
     const comment = elementLink.querySelector('.picture__comments');
@@ -24,5 +24,5 @@ function createPictures (arr) {
   });
 
   pictures.appendChild(fragment);
-};
+}
 export {createPictures};

@@ -16,35 +16,25 @@ const pristine = new Pristine(form, {
 }, false);
 
 function validateHastag (valueHastagInput) {
-  let hastags = valueHastagInput.trim().split(' ');
-    console.log(hastags)
-    for (let i = 0; i < hastags.length - 1; i++) {
-      for (let j = i + 1; j < hastags.length; j++) {
+  const hastags = valueHastagInput.trim().split(' ');
+  for (let i = 0; i < hastags.length - 1; i++) {
+    for (let j = i + 1; j < hastags.length; j++) {
 
-        if (hastags[i].trim().toLowerCase() == hastags[j].trim().toLowerCase()) {
-          console.log('1')
-          return false
-        }
+      if (hastags[i].trim().toLowerCase() === hastags[j].trim().toLowerCase()) {
+        return false;
       }
     }
+  }
 
-    if (hastags.length > 5) {
-      console.log('2')
-      return false
-    };
-    for (let i = 0; i < hastags.length; i++) {
-      if (hastags[i] && !HASTAG.test(hastags[i])) {
-        console.log('3')
-        return false
-      }
-    };
-  return true
-  // почему не работает форич?
-  // hastags.forEach(function (hastag) {
-  //   if (!HASTAG.test(hastag)) {
-  //     return false
-  //   }
-  // });
+  if (hastags.length > 5) {
+    return false;
+  }
+  for (let i = 0; i < hastags.length; i++) {
+    if (hastags[i] && !HASTAG.test(hastags[i])) {
+      return false;
+    }
+  }
+  return true;
 }
 
 function handlerFocusEsc (evt) {
@@ -54,25 +44,14 @@ function handlerFocusEsc (evt) {
 }
 hastagInput.addEventListener('keydown', handlerFocusEsc);
 
-
 pristine.addValidator(hastagInput,validateHastag, 'Неккоректное значение');
 
-
-// function validateComments (valueComments) {
-//   if (valueComments > 140) {
-//     return false
-//   }
-//   return true
-// };
-
 commentInput.addEventListener('keydown', handlerFocusEsc);
-// pristine.addValidator(commentInput,validateComments, 'Сообщение слишком длинное');
-
 
 function onFormSubmit () {
   form.addEventListener('submit', (evt) => {
     evt.preventDefault();
     pristine.validate();
   });
-};
+}
 export {onFormSubmit};

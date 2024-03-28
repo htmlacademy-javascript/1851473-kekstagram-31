@@ -3,11 +3,11 @@ import {onFormSubmit} from './validate-form.js';
 import {onSizeImage, removeSizeImage} from './change-size-image.js';
 import {filterRangeSlider, removeFilterRangeSlider} from './create-slider.js';
 
-let btnDownloaderImg = document.querySelector('.img-upload__input');
-let btnCloseFilterImg = document.querySelector('.img-upload__cancel');
+const btnDownloaderImg = document.querySelector('.img-upload__input');
+const btnCloseFilterImg = document.querySelector('.img-upload__cancel');
 
 function onOpenPopupForm () {
-  btnDownloaderImg.addEventListener('change', function() {
+  btnDownloaderImg.addEventListener('change', () => {
     document.querySelector('.img-upload__overlay').classList.remove('hidden');
     document.querySelector('body').classList.add('modal-open');
     document.addEventListener('keydown', handlerEscKeydown);
@@ -15,8 +15,8 @@ function onOpenPopupForm () {
     onFormSubmit();
     onSizeImage();
     filterRangeSlider();
-  })
-};
+  });
+}
 
 function closeFilterImg () {
   document.querySelector('.img-upload__overlay').classList.add('hidden');
@@ -26,14 +26,14 @@ function closeFilterImg () {
   btnDownloaderImg.value = '';
   removeSizeImage();
   removeFilterRangeSlider();
-};
+}
 
 function handlerEscKeydown (evt) {
   if (isEscapeKey(evt)) {
     evt.preventDefault();
     closeFilterImg();
   }
-};
+}
 
 export {onOpenPopupForm};
 

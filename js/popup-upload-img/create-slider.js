@@ -54,8 +54,6 @@ const heat = {
   unit: ''
 };
 
-
-
 function filterRangeSlider () {
   noUiSlider.create(sliderElement, {
     range: {
@@ -79,7 +77,7 @@ function filterRangeSlider () {
   });
 
   function reloadValueSlider (filterStyleString) {
-    let filterStyle = eval(filterStyleString);
+    const filterStyle = eval(filterStyleString);
     sliderElement.noUiSlider.updateOptions({
       range: {
         min: filterStyle.range.min,
@@ -88,21 +86,21 @@ function filterRangeSlider () {
       start: filterStyle.start,
       step: filterStyle.step
     });
-    sliderElement.noUiSlider.on('update', function () {
+    sliderElement.noUiSlider.on('update', () => {
       sliderInput.value = sliderElement.noUiSlider.get();
-      imagePreview.style.filter = filterStyle.filter + '(' + sliderInput.value + filterStyle.unit + ')';
+      imagePreview.style.filter = `${filterStyle.filter}(${sliderInput.value}${filterStyle.unit})`;
     });
     rangeFilter.classList.remove('hidden');
   }
 
   rangeFilter.classList.add('hidden');
 
-  sliderElement.noUiSlider.on('update', function () {
+  sliderElement.noUiSlider.on('update', () => {
     sliderInput.value = sliderElement.noUiSlider.get();
   });
 
-  filtersRadio.forEach( function (filterRadio) {
-    filterRadio.addEventListener('change', function (evt) {
+  filtersRadio.forEach((filterRadio) => {
+    filterRadio.addEventListener('change', () => {
       const nameEffect = filterRadio.value;
       if (nameEffect === 'none') {
         imagePreview.style.filter = null;
@@ -110,9 +108,9 @@ function filterRangeSlider () {
       } else {
         reloadValueSlider(nameEffect);
       }
-    })
+    });
   });
-};
+}
 
 function removeFilterRangeSlider () {
   sliderElement.noUiSlider.destroy();

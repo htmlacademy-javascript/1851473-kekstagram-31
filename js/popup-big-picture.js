@@ -1,9 +1,9 @@
-import {isEscapeKey} from './util.js'
+import {isEscapeKey} from './util.js';
 
 const NUMBER_COMMENTS_DISPLAYED = 5;
 let minNumber = 0;
 let maxNumber = NUMBER_COMMENTS_DISPLAYED;
-let arrComments = []
+let arrComments = [];
 
 
 function openPopup(itemObject) {
@@ -26,7 +26,7 @@ function openPopup(itemObject) {
   document.addEventListener('keydown', handlerEscKeydown);
 
   arrComments = itemObject.comments;
-  document.querySelector('.comments-loader').addEventListener('click', btnLoaderHeandler)
+  document.querySelector('.comments-loader').addEventListener('click', btnLoaderHeandler);
 }
 
 function closePopup () {
@@ -55,9 +55,9 @@ function createListComment (arr, min, max) {
   } else {
     comentsShowCount.textContent = max;
     document.querySelector('.comments-loader').classList.remove('hidden');
-  };
+  }
 
-  arr.forEach( function (object, index) {
+  arr.forEach((object, index) => {
     if (index < max && index >= min) {
       const item = document.createElement('li');
       item.classList.add('social__comment');
