@@ -52,6 +52,17 @@ function onFormSubmit () {
   form.addEventListener('submit', (evt) => {
     evt.preventDefault();
     pristine.validate();
+    const isValid = pristine.validate();
+    if (isValid) {
+      const formData = new FormData(evt.target);
+      fetch('https://31.javascript.htmlacademy.pro/kekstagram ', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+        body: formData
+      });
+    }
   });
 }
 export {onFormSubmit};

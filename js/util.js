@@ -7,7 +7,6 @@ function getRandomInteger (min, max) {
   return Math.floor(result);
 }
 
-
 // генератор рандом числ которые НЕ повторяются
 function createRandomIdFromRangeGenerator (min, max) {
   const previousValues = [];
