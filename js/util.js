@@ -7,7 +7,6 @@ function getRandomInteger (min, max) {
   return Math.floor(result);
 }
 
-
 // генератор рандом числ которые НЕ повторяются
 function createRandomIdFromRangeGenerator (min, max) {
   const previousValues = [];
@@ -28,8 +27,8 @@ function createRandomIdFromRangeGenerator (min, max) {
 
 // достаёт рандомный элемент массива
 function getRandomArrayElement(array) {
-  let i = getRandomInteger(0, array.length - 1)
-  return array[i]
+  const i = getRandomInteger(0, array.length - 1);
+  return array[i];
 }
 
 const isEscapeKey = (evt) => evt.key === 'Escape';
