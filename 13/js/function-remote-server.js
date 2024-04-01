@@ -72,18 +72,20 @@ function showSuccessMessageBigPicture () {
 }
 
 
-
 function setServerPictures (formData, onSuccess) {
   fetch('https://31.javascript.htmlacademy.pro/kekstagram',
     {
       method: 'POST',
-      headers: {
-        'Content-Type': 'multipart/form-data',
-      },
       body: formData,
     },
   )
-    .then(onSuccess)
+    .then((response) => {
+      if (response.ok) {
+        onSuccess();
+      } else {
+        alert('Не удалось отправить форму. Попробуйте ещё раз');
+      }
+    })
     .then(() => {
       showSuccessMessageBigPicture();
     })
