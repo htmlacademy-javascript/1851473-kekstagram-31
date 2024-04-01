@@ -1,4 +1,6 @@
 import {isEscapeKey} from '../util.js';
+import {setServerPictures} from '../function-remote-server.js';
+
 const HASTAG = /^#[a-zа-яё0-9]{1,19}$/i;
 const form = document.querySelector('.img-upload__form');
 const hastagInput = document.querySelector('.text__hashtags');
@@ -48,20 +50,14 @@ pristine.addValidator(hastagInput,validateHastag, 'Неккоректное зн
 
 commentInput.addEventListener('keydown', handlerFocusEsc);
 
-function onFormSubmit () {
+function onFormSubmit (onSuccess) {
   form.addEventListener('submit', (evt) => {
     evt.preventDefault();
     pristine.validate();
     const isValid = pristine.validate();
     if (isValid) {
       const formData = new FormData(evt.target);
-      fetch('https://31.javascript.htmlacademy.pro/kekstagram ', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-        body: formData
-      });
+      setServerPictures(formData, onSuccess);
     }
   });
 }
