@@ -71,6 +71,8 @@ function showSuccessMessageBigPicture () {
   }
 }
 
+
+
 function setServerPictures (formData, onSuccess) {
   fetch('https://31.javascript.htmlacademy.pro/kekstagram',
     {
@@ -89,4 +91,5 @@ function setServerPictures (formData, onSuccess) {
       showErrorMessageBigPicture();
     });
 }
+
 export {getServerPictures, setServerPictures};
