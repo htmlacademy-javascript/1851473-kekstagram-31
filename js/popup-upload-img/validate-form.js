@@ -48,20 +48,50 @@ pristine.addValidator(hastagInput,validateHastag, 'Неккоректное зн
 
 commentInput.addEventListener('keydown', handlerFocusEsc);
 
-function onFormSubmit () {
+function showErrorMessageBigPicture () {
+  const templateError = document.querySelector('#error').content;
+  const body = document.querySelector('body');
+  body.appendChild(templateError.cloneNode(true));
+  const errorBtn = document.querySelector('.error__button');
+  const modalError = document.querySelector('.error');
+  errorBtn.addEventListener('click', () => {
+    modalError.remove();
+    document.removeEventListener('keydown', handlerEscModalError);
+  });
+  modalError.addEventListener('click', (evt) => {
+    if (!evt.target.matches('.error__inner')) {
+      modalError.remove();
+      document.removeEventListener('keydown', handlerEscModalError);
+    }
+  });
+  document.addEventListener('keydown', handlerEscModalError);
+  function handlerEscModalError (evt) {
+    if (isEscapeKey(evt)) {
+      evt.preventDefault();
+      modalError.remove();
+      document.removeEventListener('keydown', handlerEscModalError);
+    }
+  }
+}
+
+function onFormSubmit (onSuccess) {
   form.addEventListener('submit', (evt) => {
     evt.preventDefault();
     pristine.validate();
     const isValid = pristine.validate();
     if (isValid) {
       const formData = new FormData(evt.target);
-      fetch('https://31.javascript.htmlacademy.pro/kekstagram ', {
+      fetch('https://31.javascript.htmlacademy.pro/kekstagram', {
         method: 'POST',
         headers: {
           'Content-Type': 'multipart/form-data',
         },
-        body: formData
-      });
+        body: formData,
+      },
+      ).then(onSuccess)
+        .catch(() => {
+          showErrorMessageBigPicture();
+        });
     }
   });
 }

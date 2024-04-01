@@ -12,7 +12,7 @@ function onOpenPopupForm () {
     document.querySelector('body').classList.add('modal-open');
     document.addEventListener('keydown', handlerEscKeydown);
     btnCloseFilterImg.addEventListener('click', closeFilterImg);
-    onFormSubmit();
+    onFormSubmit(closeFilterImg);
     onSizeImage();
     filterRangeSlider();
   });
@@ -29,7 +29,8 @@ function closeFilterImg () {
 }
 
 function handlerEscKeydown (evt) {
-  if (isEscapeKey(evt)) {
+  const modalError = document.querySelector('.error');
+  if (isEscapeKey(evt) && !modalError) {
     evt.preventDefault();
     closeFilterImg();
   }

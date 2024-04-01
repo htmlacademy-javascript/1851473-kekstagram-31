@@ -3,7 +3,7 @@ import {createPictures} from './create-pictures.js';
 function showErrorMessage () {
   const templateError = document.querySelector('#data-error').content;
   const body = document.querySelector('body');
-  body.appendChild(templateError);
+  body.appendChild(templateError.cloneNode(true));
   setTimeout(() => {
     document.querySelector('.data-error').remove();
   }, 5000);
