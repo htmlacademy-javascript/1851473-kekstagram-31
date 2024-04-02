@@ -12,7 +12,7 @@ function onOpenPopupForm () {
     document.querySelector('body').classList.add('modal-open');
     document.addEventListener('keydown', handlerEscKeydown);
     btnCloseFilterImg.addEventListener('click', closeFilterImg);
-    formSubmit(closeFilterImg);
+    // formSubmit(closeFilterImg);
     onSizeImage();
     filterRangeSlider();
   });
@@ -36,5 +36,5 @@ function handlerEscKeydown (evt) {
   }
 }
 
-export {onOpenPopupForm};
+export {onOpenPopupForm, closeFilterImg};
 

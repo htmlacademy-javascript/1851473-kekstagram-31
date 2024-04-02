@@ -79,6 +79,9 @@ function formSubmit (onSuccess) {
       sendData(formData)
         .then(onSuccess)
         .then(() => {
+          form.reset();
+        })
+        .then(() => {
           showSuccessMessageBigPicture();
         })
         .catch(() => {
