@@ -1,6 +1,12 @@
 import {onOpenPopupForm} from './popup-upload-img/filter-popup.js';
-import {getServerPictures} from './function-remote-server.js';
+import {showErrorMessage} from './function-remote-server.js';
+import {getData} from './api.js';
+import {createPictures} from './create-pictures.js';
 
-getServerPictures();
+getData()
+  .then((pictures) => createPictures(pictures))
+  .catch(() => {
+    showErrorMessage();
+  });
 onOpenPopupForm();
 

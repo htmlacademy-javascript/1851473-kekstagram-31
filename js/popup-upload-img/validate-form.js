@@ -1,10 +1,28 @@
 import {isEscapeKey} from '../util.js';
-import {setServerPictures} from '../function-remote-server.js';
+import {showErrorMessageBigPicture, showSuccessMessageBigPicture} from '../function-remote-server.js';
+import {sendData} from '../api.js';
 
 const HASTAG = /^#[a-zа-яё0-9]{1,19}$/i;
+
+const SubmitButtonText = {
+  IDLE: 'Опубликовать',
+  SENDING: 'Публикую...'
+};
+
 const form = document.querySelector('.img-upload__form');
 const hastagInput = document.querySelector('.text__hashtags');
 const commentInput = document.querySelector('.text__description');
+const submitButton = form.querySelector('.img-upload__submit');
+
+const blockSubmitButton = () => {
+  submitButton.disabled = true;
+  submitButton.textContent = SubmitButtonText.SENDING;
+};
+
+const unblockSubmitButton = () => {
+  submitButton.disabled = false;
+  submitButton.textContent = SubmitButtonText.IDLE;
+};
 
 
 const pristine = new Pristine(form, {
@@ -50,15 +68,25 @@ pristine.addValidator(hastagInput,validateHastag, 'Неккоректное зн
 
 commentInput.addEventListener('keydown', handlerFocusEsc);
 
-function onFormSubmit (onSuccess) {
+function formSubmit (onSuccess) {
   form.addEventListener('submit', (evt) => {
     evt.preventDefault();
     pristine.validate();
     const isValid = pristine.validate();
     if (isValid) {
+      blockSubmitButton();
       const formData = new FormData(evt.target);
-      setServerPictures(formData, onSuccess);
+      sendData(formData)
+        .then(onSuccess)
+        .then(() => {
+          showSuccessMessageBigPicture();
+        })
+        .catch(() => {
+          showErrorMessageBigPicture();
+        })
+        .finally(unblockSubmitButton);
     }
   });
 }
-export {onFormSubmit};
+
+export {formSubmit};

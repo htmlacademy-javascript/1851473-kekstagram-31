@@ -1,5 +1,5 @@
 import {isEscapeKey} from '../util.js';
-import {onFormSubmit} from './validate-form.js';
+import {formSubmit} from './validate-form.js';
 import {onSizeImage, removeSizeImage} from './change-size-image.js';
 import {filterRangeSlider, removeFilterRangeSlider} from './create-slider.js';
 
@@ -12,7 +12,7 @@ function onOpenPopupForm () {
     document.querySelector('body').classList.add('modal-open');
     document.addEventListener('keydown', handlerEscKeydown);
     btnCloseFilterImg.addEventListener('click', closeFilterImg);
-    onFormSubmit(closeFilterImg);
+    formSubmit(closeFilterImg);
     onSizeImage();
     filterRangeSlider();
   });
