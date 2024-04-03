@@ -3,56 +3,59 @@ const sliderInput = document.querySelector('.effect-level__value');
 const filtersRadio = document.querySelectorAll('.effects__radio');
 const imagePreview = document.querySelector('.img-upload__preview img');
 const rangeFilter = document.querySelector('.img-upload__effect-level');
-const chrome = {
-  range: {
-    min: 0,
-    max: 1,
+const Filters = {
+  chrome: {
+    range: {
+      min: 0,
+      max: 1,
+    },
+    start: 1,
+    step: 0.1,
+    filter: 'grayscale',
+    unit: ''
   },
-  start: 1,
-  step: 0.1,
-  filter: 'grayscale',
-  unit: ''
-};
-const sepia = {
-  range: {
-    min: 0,
-    max: 1,
+  sepia: {
+    range: {
+      min: 0,
+      max: 1,
+    },
+    start: 1,
+    step: 0.1,
+    filter: 'sepia',
+    unit: ''
   },
-  start: 1,
-  step: 0.1,
-  filter: 'sepia',
-  unit: ''
-};
-const marvin = {
-  range: {
-    min: 0,
-    max: 100
+  marvin: {
+    range: {
+      min: 0,
+      max: 100
+    },
+    start: 100,
+    step: 1,
+    filter: 'invert',
+    unit: '%'
   },
-  start: 100,
-  step: 1,
-  filter: 'invert',
-  unit: '%'
-};
-const phobos = {
-  range: {
-    min: 0,
-    max: 3
+  phobos: {
+    range: {
+      min: 0,
+      max: 3
+    },
+    start: 3,
+    step: 0.1,
+    filter: 'blur',
+    unit: 'px'
   },
-  start: 3,
-  step: 0.1,
-  filter: 'blur',
-  unit: 'px'
+  heat: {
+    range: {
+      min: 0,
+      max: 3
+    },
+    start: 3,
+    step: 0.1,
+    filter: 'brightness',
+    unit: ''
+  }
 };
-const heat = {
-  range: {
-    min: 0,
-    max: 3
-  },
-  start: 3,
-  step: 0.1,
-  filter: 'brightness',
-  unit: ''
-};
+
 
 function filterRangeSlider () {
   noUiSlider.create(sliderElement, {
@@ -77,7 +80,7 @@ function filterRangeSlider () {
   });
 
   function reloadValueSlider (filterStyleString) {
-    const filterStyle = eval(filterStyleString);
+    const filterStyle = Filters[filterStyleString];
     sliderElement.noUiSlider.updateOptions({
       range: {
         min: filterStyle.range.min,

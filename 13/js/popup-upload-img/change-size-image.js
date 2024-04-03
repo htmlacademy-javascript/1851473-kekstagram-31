@@ -1,4 +1,5 @@
 const STEP = 25;
+const MAX_VALUE_RANGE = 100;
 const btnSmallSize = document.querySelector('.scale__control--smaller');
 const btnBigSize = document.querySelector('.scale__control--bigger');
 const sizeInput = document.querySelector('.scale__control--value');
@@ -12,23 +13,23 @@ function onSizeImage () {
 function onBtnBig () {
   let inputValue = Number(sizeInput.value.replace('%', ''));
   inputValue += STEP;
-  if (inputValue > 100) {
-    inputValue = 100;
+  if (inputValue > MAX_VALUE_RANGE) {
+    inputValue = MAX_VALUE_RANGE;
   }
   sizeInput.value = `${inputValue}%`;
 
-  imgUploadPreview.style.transform = `scale(${inputValue / 100})`;
+  imgUploadPreview.style.transform = `scale(${inputValue / MAX_VALUE_RANGE})`;
 }
 
 function onBtnSmall () {
   let inputValue = Number(sizeInput.value.replace('%', ''));
   inputValue -= STEP;
-  if (inputValue < 25) {
-    inputValue = 25;
+  if (inputValue < STEP) {
+    inputValue = STEP;
   }
   sizeInput.value = `${inputValue}%`;
 
-  imgUploadPreview.style.transform = `scale(${inputValue / 100})`;
+  imgUploadPreview.style.transform = `scale(${inputValue / MAX_VALUE_RANGE})`;
 }
 
 function removeSizeImage () {

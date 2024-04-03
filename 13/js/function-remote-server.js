@@ -1,4 +1,4 @@
-import {createPictures} from './create-pictures.js';
+
 import {isEscapeKey} from './util.js';
 
 function showErrorMessage () {
@@ -8,15 +8,6 @@ function showErrorMessage () {
   setTimeout(() => {
     document.querySelector('.data-error').remove();
   }, 5000);
-}
-
-function getServerPictures () {
-  fetch ('https://31.javascript.htmlacademy.pro/kekstagram/data')
-    .then((response) => response.json())
-    .then((pictures) => createPictures(pictures))
-    .catch(() => {
-      showErrorMessage();
-    });
 }
 
 function showErrorMessageBigPicture () {
@@ -71,27 +62,4 @@ function showSuccessMessageBigPicture () {
   }
 }
 
-
-function setServerPictures (formData, onSuccess) {
-  fetch('https://31.javascript.htmlacademy.pro/kekstagram',
-    {
-      method: 'POST',
-      body: formData,
-    },
-  )
-    .then((response) => {
-      if (response.ok) {
-        onSuccess();
-      } else {
-        alert('Не удалось отправить форму. Попробуйте ещё раз');
-      }
-    })
-    .then(() => {
-      showSuccessMessageBigPicture();
-    })
-    .catch(() => {
-      showErrorMessageBigPicture();
-    });
-}
-
-export {getServerPictures, setServerPictures};
+export {showErrorMessage, showSuccessMessageBigPicture, showErrorMessageBigPicture};
