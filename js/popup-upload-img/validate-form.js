@@ -25,7 +25,6 @@ const unblockSubmitButton = () => {
   submitButton.textContent = SubmitButtonText.IDLE;
 };
 
-
 const pristine = new Pristine(form, {
   classTo: 'img-upload__field-wrapper',
   errorClass: 'img-upload__field-wrapper--error',
@@ -36,7 +35,8 @@ const pristine = new Pristine(form, {
 
 }, false);
 
-function validateHastag (valueHastagInput) {
+
+function validateHastagRepeat (valueHastagInput) {
   const hastags = valueHastagInput.trim().split(' ');
   for (let i = 0; i < hastags.length - 1; i++) {
     for (let j = i + 1; j < hastags.length; j++) {
@@ -46,10 +46,20 @@ function validateHastag (valueHastagInput) {
       }
     }
   }
+  return true;
+}
 
+function validateHastagMaxQuantity (valueHastagInput) {
+  const hastags = valueHastagInput.trim().split(' ');
   if (hastags.length > MAX_QUANTITY_HASTAG) {
     return false;
   }
+  return true;
+}
+
+function validateHastag (valueHastagInput) {
+  const hastags = valueHastagInput.trim().split(' ');
+
   for (let i = 0; i < hastags.length; i++) {
     if (hastags[i] && !HASTAG.test(hastags[i])) {
       return false;
@@ -66,6 +76,8 @@ function handlerFocusEsc (evt) {
 hastagInput.addEventListener('keydown', handlerFocusEsc);
 
 pristine.addValidator(hastagInput,validateHastag, 'Неккоректное значение');
+pristine.addValidator(hastagInput,validateHastagMaxQuantity, `Хэштегов не должно быть больше ${MAX_QUANTITY_HASTAG}!`);
+pristine.addValidator(hastagInput,validateHastagRepeat, 'Хэштеги не должны повторяться!');
 
 commentInput.addEventListener('keydown', handlerFocusEsc);
 
