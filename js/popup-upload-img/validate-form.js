@@ -3,6 +3,7 @@ import {showErrorMessageBigPicture, showSuccessMessageBigPicture} from '../funct
 import {sendData} from '../api.js';
 
 const HASTAG = /^#[a-zа-яё0-9]{1,19}$/i;
+const MAX_QUANTITY_HASTAG = 5;
 
 const SubmitButtonText = {
   IDLE: 'Опубликовать',
@@ -46,7 +47,7 @@ function validateHastag (valueHastagInput) {
     }
   }
 
-  if (hastags.length > 5) {
+  if (hastags.length > MAX_QUANTITY_HASTAG) {
     return false;
   }
   for (let i = 0; i < hastags.length; i++) {
@@ -67,6 +68,11 @@ hastagInput.addEventListener('keydown', handlerFocusEsc);
 pristine.addValidator(hastagInput,validateHastag, 'Неккоректное значение');
 
 commentInput.addEventListener('keydown', handlerFocusEsc);
+
+function clearForm () {
+  form.reset();
+  pristine.validate();
+}
 
 function formSubmit (onSuccess) {
   form.addEventListener('submit', (evt) => {
@@ -92,4 +98,4 @@ function formSubmit (onSuccess) {
   });
 }
 
-export {formSubmit};
+export {formSubmit, clearForm};
