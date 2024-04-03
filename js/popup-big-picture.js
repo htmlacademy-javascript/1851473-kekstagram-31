@@ -4,7 +4,7 @@ const NUMBER_COMMENTS_DISPLAYED = 5;
 let minNumber = 0;
 let maxNumber = NUMBER_COMMENTS_DISPLAYED;
 let arrComments = [];
-
+const closeBtn = document.querySelector('.big-picture__cancel');
 
 function openPopup(itemObject) {
   const modal = document.querySelector('.big-picture');
@@ -25,6 +25,8 @@ function openPopup(itemObject) {
 
   document.addEventListener('keydown', handlerEscKeydown);
 
+  closeBtn.addEventListener('click', closePopup);
+
   arrComments = itemObject.comments;
   document.querySelector('.comments-loader').addEventListener('click', btnLoaderHeandler);
 }
@@ -35,6 +37,7 @@ function closePopup () {
   document.querySelector('.big-picture').classList.add('hidden');
   document.querySelector('body').classList.remove('modal-open');
   document.removeEventListener('keydown', handlerEscKeydown);
+  closeBtn.removeEventListener('click', closePopup);
   document.querySelector('.comments-loader').removeEventListener('click', btnLoaderHeandler);
 }
 

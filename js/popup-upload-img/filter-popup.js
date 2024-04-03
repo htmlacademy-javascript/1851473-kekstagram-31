@@ -1,7 +1,8 @@
 import {isEscapeKey} from '../util.js';
-import {onFormSubmit} from './validate-form.js';
+import {clearForm} from './validate-form.js';
 import {onSizeImage, removeSizeImage} from './change-size-image.js';
 import {filterRangeSlider, removeFilterRangeSlider} from './create-slider.js';
+
 
 const btnDownloaderImg = document.querySelector('.img-upload__input');
 const btnCloseFilterImg = document.querySelector('.img-upload__cancel');
@@ -12,7 +13,6 @@ function onOpenPopupForm () {
     document.querySelector('body').classList.add('modal-open');
     document.addEventListener('keydown', handlerEscKeydown);
     btnCloseFilterImg.addEventListener('click', closeFilterImg);
-    onFormSubmit(closeFilterImg);
     onSizeImage();
     filterRangeSlider();
   });
@@ -26,6 +26,7 @@ function closeFilterImg () {
   btnDownloaderImg.value = '';
   removeSizeImage();
   removeFilterRangeSlider();
+  clearForm()
 }
 
 function handlerEscKeydown (evt) {
@@ -36,5 +37,5 @@ function handlerEscKeydown (evt) {
   }
 }
 
-export {onOpenPopupForm};
+export {onOpenPopupForm, closeFilterImg};
 
