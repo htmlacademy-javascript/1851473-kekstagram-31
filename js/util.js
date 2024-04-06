@@ -14,7 +14,6 @@ function createRandomIdFromRangeGenerator (min, max) {
   return function () {
     let currentValue = getRandomInteger(min, max);
     if (previousValues.length >= (max - min + 1)) {
-      console.error('Перебраны все числа из диапазона от ' + min + ' до ' + max);
       return null;
     }
     while (previousValues.includes(currentValue)) {
@@ -33,4 +32,15 @@ function getRandomArrayElement(array) {
 
 const isEscapeKey = (evt) => evt.key === 'Escape';
 
-export {getRandomInteger, createRandomIdFromRangeGenerator, getRandomArrayElement, isEscapeKey};
+
+function debounce (callback, timeoutDelay = 500) {
+  let timeoutId;
+
+  return (...rest) => {
+    clearTimeout(timeoutId);
+
+    timeoutId = setTimeout(() => callback.apply(this, rest), timeoutDelay);
+  };
+}
+
+export {getRandomInteger, createRandomIdFromRangeGenerator, getRandomArrayElement, isEscapeKey, debounce};
