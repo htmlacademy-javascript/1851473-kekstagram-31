@@ -1,8 +1,9 @@
-import {createRandomIdFromRangeGenerator} from './util.js';
+import {createRandomIdFromRangeGenerator, debounce} from './util.js';
 import {createPictures} from './create-pictures.js';
 
 const MIN_RANDOM_NUMBER = 0;
 const MAX_RANDOM_NUMBER = 24;
+const RERENDER_DELAY = 500;
 const btnFilterDefoult = document.querySelector('#filter-default');
 const btnFilterRandom = document.querySelector('#filter-random');
 const btnFilterDiscussed = document.querySelector('#filter-discussed');
@@ -28,7 +29,12 @@ const randomeFilter = function (pictures) {
       pictureCollection[i].remove();
     }
     const randomPictures = createRandomNoRepatFilter(pictures);
-    createPictures(randomPictures);
+    debounce(
+      () => {
+        createPictures(randomPictures);
+      },
+      RERENDER_DELAY,
+    );
   });
 
   btnFilterDiscussed.addEventListener('click', () => {
@@ -38,7 +44,12 @@ const randomeFilter = function (pictures) {
       pictureCollection[i].remove();
     }
     const sortPictures = pictures.slice(0).sort(sortByComments);
-    createPictures(sortPictures);
+    debounce(
+      () => {
+        createPictures(sortPictures);
+      },
+      RERENDER_DELAY,
+    );
   });
   btnFilterDefoult.addEventListener('click', () => {
     setActiveBtn(btnFilterDefoult);
@@ -46,7 +57,12 @@ const randomeFilter = function (pictures) {
     for (let i = 0; i < pictureCollection.length; i++) {
       pictureCollection[i].remove();
     }
-    createPictures(pictures);
+    debounce(
+      () => {
+        createPictures(pictures);
+      },
+      RERENDER_DELAY,
+    );
   });
 };
 
