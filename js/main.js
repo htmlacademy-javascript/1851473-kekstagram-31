@@ -4,13 +4,13 @@ import {getData} from './api.js';
 import {createPictures} from './create-pictures.js';
 import {formSubmit} from './popup-upload-img/validate-form.js';
 import {closeFilterImg} from './popup-upload-img/filter-popup.js';
-import {randomeFilter} from './filter-pictures.js';
+import {randomFilter} from './filter-pictures.js';
 
 
 getData()
   .then((pictures) => {
     createPictures(pictures);
-    randomeFilter(pictures);
+    randomFilter(pictures);
   })
   .catch(() => {
     showErrorMessage();

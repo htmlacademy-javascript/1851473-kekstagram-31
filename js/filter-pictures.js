@@ -4,7 +4,7 @@ import {createPictures} from './create-pictures.js';
 const MIN_RANDOM_NUMBER = 0;
 const MAX_RANDOM_NUMBER = 24;
 const RERENDER_DELAY = 500;
-const btnFilterDefoult = document.querySelector('#filter-default');
+const btnFilterDefault = document.querySelector('#filter-default');
 const btnFilterRandom = document.querySelector('#filter-random');
 const btnFilterDiscussed = document.querySelector('#filter-discussed');
 const setActiveBtn = (currentBtn) => {
@@ -19,54 +19,48 @@ const sortByComments = function (a, b) {
   return b.comments.length - a.comments.length;
 };
 
-const randomeFilter = function (pictures) {
+const randomFilter = function (pictures) {
   document.querySelector('.img-filters').classList.remove('img-filters--inactive');
-
-  btnFilterRandom.addEventListener('click', () => {
-    setActiveBtn(btnFilterRandom);
+  const debouncedFilterRandom = debounce(() => {
     const pictureCollection = document.querySelectorAll('.picture');
     for (let i = 0; i < pictureCollection.length; i++) {
       pictureCollection[i].remove();
     }
-    const randomPictures = createRandomNoRepatFilter(pictures);
-    debounce(
-      () => {
-        createPictures(randomPictures);
-      },
-      RERENDER_DELAY,
-    );
+    const randomPictures = createRandomNoRepeatFilter(pictures);
+    createPictures(randomPictures);
+  }, RERENDER_DELAY);
+  btnFilterRandom.addEventListener('click', () => {
+    setActiveBtn(btnFilterRandom);
+    debouncedFilterRandom();
   });
 
-  btnFilterDiscussed.addEventListener('click', () => {
-    setActiveBtn(btnFilterDiscussed);
+  const debouncedFilterDiscussed = debounce(() => {
     const pictureCollection = document.querySelectorAll('.picture');
     for (let i = 0; i < pictureCollection.length; i++) {
       pictureCollection[i].remove();
     }
     const sortPictures = pictures.slice(0).sort(sortByComments);
-    debounce(
-      () => {
-        createPictures(sortPictures);
-      },
-      RERENDER_DELAY,
-    );
+    createPictures(sortPictures);
+  }, RERENDER_DELAY);
+  btnFilterDiscussed.addEventListener('click', () => {
+    setActiveBtn(btnFilterDiscussed);
+    debouncedFilterDiscussed();
   });
-  btnFilterDefoult.addEventListener('click', () => {
-    setActiveBtn(btnFilterDefoult);
+
+  const debouncedFilterDefault = debounce(() => {
     const pictureCollection = document.querySelectorAll('.picture');
     for (let i = 0; i < pictureCollection.length; i++) {
       pictureCollection[i].remove();
+      createPictures(pictures);
     }
-    debounce(
-      () => {
-        createPictures(pictures);
-      },
-      RERENDER_DELAY,
-    );
+  }, RERENDER_DELAY);
+  btnFilterDefault.addEventListener('click', () => {
+    setActiveBtn(btnFilterDefault);
+    debouncedFilterDefault();
   });
 };
 
-function createRandomNoRepatFilter (pictures) {
+function createRandomNoRepeatFilter (pictures) {
   const randomNoRepeat = createRandomIdFromRangeGenerator(MIN_RANDOM_NUMBER, MAX_RANDOM_NUMBER);
   const newPictures = [];
   for (let i = 0; i < 10; i++) {
@@ -76,4 +70,4 @@ function createRandomNoRepatFilter (pictures) {
   return newPictures;
 }
 
-export {randomeFilter};
+export {randomFilter};
