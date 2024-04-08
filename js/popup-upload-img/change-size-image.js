@@ -1,43 +1,43 @@
 const STEP = 25;
 const MAX_VALUE_RANGE = 100;
-const btnSmallSize = document.querySelector('.scale__control--smaller');
-const btnBigSize = document.querySelector('.scale__control--bigger');
-const sizeInput = document.querySelector('.scale__control--value');
-const imgUploadPreview = document.querySelector('.img-upload__preview');
+const btnSmallSizeNode = document.querySelector('.scale__control--smaller');
+const btnBigSizeNode = document.querySelector('.scale__control--bigger');
+const sizeInputNode = document.querySelector('.scale__control--value');
+const imgUploadPreviewNode = document.querySelector('.img-upload__preview');
 
-function onSizeImage () {
-  btnBigSize.addEventListener('click', onBtnBig);
-  btnSmallSize.addEventListener('click', onBtnSmall);
+function changeSizeImage () {
+  btnBigSizeNode.addEventListener('click', BtnBigClickHandler);
+  btnSmallSizeNode.addEventListener('click', BtnSmallClickHandler);
 }
 
-function onBtnBig () {
-  let inputValue = Number(sizeInput.value.replace('%', ''));
+function BtnBigClickHandler () {
+  let inputValue = Number(sizeInputNode.value.replace('%', ''));
   inputValue += STEP;
   if (inputValue > MAX_VALUE_RANGE) {
     inputValue = MAX_VALUE_RANGE;
   }
-  sizeInput.value = `${inputValue}%`;
+  sizeInputNode.value = `${inputValue}%`;
 
-  imgUploadPreview.style.transform = `scale(${inputValue / MAX_VALUE_RANGE})`;
+  imgUploadPreviewNode.style.transform = `scale(${inputValue / MAX_VALUE_RANGE})`;
 }
 
-function onBtnSmall () {
-  let inputValue = Number(sizeInput.value.replace('%', ''));
+function BtnSmallClickHandler () {
+  let inputValue = Number(sizeInputNode.value.replace('%', ''));
   inputValue -= STEP;
   if (inputValue < STEP) {
     inputValue = STEP;
   }
-  sizeInput.value = `${inputValue}%`;
+  sizeInputNode.value = `${inputValue}%`;
 
-  imgUploadPreview.style.transform = `scale(${inputValue / MAX_VALUE_RANGE})`;
+  imgUploadPreviewNode.style.transform = `scale(${inputValue / MAX_VALUE_RANGE})`;
 }
 
 function removeSizeImage () {
-  btnSmallSize.removeEventListener('click', onBtnSmall);
-  btnBigSize.removeEventListener('click', onBtnBig);
-  imgUploadPreview.style.transform = '';
+  btnSmallSizeNode.removeEventListener('click', BtnSmallClickHandler);
+  btnBigSizeNode.removeEventListener('click', BtnBigClickHandler);
+  imgUploadPreviewNode.style.transform = '';
 }
 
-export {onSizeImage, removeSizeImage};
+export {changeSizeImage, removeSizeImage};
 
 

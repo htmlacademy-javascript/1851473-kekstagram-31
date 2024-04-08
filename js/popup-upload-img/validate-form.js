@@ -2,30 +2,30 @@ import {isEscapeKey} from '../util.js';
 import {showErrorMessageBigPicture, showSuccessMessageBigPicture} from '../function-remote-server.js';
 import {sendData} from '../api.js';
 
-const HASTAG = /^#[a-zа-яё0-9]{1,19}$/i;
-const MAX_QUANTITY_HASTAG = 5;
+const HASHTAG = /^#[a-zа-яё0-9]{1,19}$/i;
+const MAX_QUANTITY_HASHTAG = 5;
 
 const SubmitButtonText = {
   IDLE: 'Опубликовать',
   SENDING: 'Публикую...'
 };
 
-const form = document.querySelector('.img-upload__form');
-const hastagInput = document.querySelector('.text__hashtags');
+const formNode = document.querySelector('.img-upload__form');
+const hashtagInputNode = document.querySelector('.text__hashtags');
 const commentInput = document.querySelector('.text__description');
-const submitButton = form.querySelector('.img-upload__submit');
+const submitButtonNode = formNode.querySelector('.img-upload__submit');
 
 const blockSubmitButton = () => {
-  submitButton.disabled = true;
-  submitButton.textContent = SubmitButtonText.SENDING;
+  submitButtonNode.disabled = true;
+  submitButtonNode.textContent = SubmitButtonText.SENDING;
 };
 
 const unblockSubmitButton = () => {
-  submitButton.disabled = false;
-  submitButton.textContent = SubmitButtonText.IDLE;
+  submitButtonNode.disabled = false;
+  submitButtonNode.textContent = SubmitButtonText.IDLE;
 };
 
-const pristine = new Pristine(form, {
+const pristine = new Pristine(formNode, {
   classTo: 'img-upload__field-wrapper',
   errorClass: 'img-upload__field-wrapper--error',
   successClass: 'form__item--valid',
@@ -36,12 +36,12 @@ const pristine = new Pristine(form, {
 }, false);
 
 
-function validateHastagRepeat (valueHastagInput) {
-  const hastags = valueHastagInput.trim().split(' ');
-  for (let i = 0; i < hastags.length - 1; i++) {
-    for (let j = i + 1; j < hastags.length; j++) {
+function validateHashtagRepeat (valueHashtagInput) {
+  const hashtags = valueHashtagInput.trim().split(' ');
+  for (let i = 0; i < hashtags.length - 1; i++) {
+    for (let j = i + 1; j < hashtags.length; j++) {
 
-      if (hastags[i].trim().toLowerCase() === hastags[j].trim().toLowerCase()) {
+      if (hashtags[i].trim().toLowerCase() === hashtags[j].trim().toLowerCase()) {
         return false;
       }
     }
@@ -49,45 +49,45 @@ function validateHastagRepeat (valueHastagInput) {
   return true;
 }
 
-function validateHastagMaxQuantity (valueHastagInput) {
-  const hastags = valueHastagInput.trim().split(' ');
-  if (hastags.length > MAX_QUANTITY_HASTAG) {
+function validateHashtagMaxQuantity (valueHashtagInput) {
+  const hashtags = valueHashtagInput.trim().split(' ');
+  if (hashtags.length > MAX_QUANTITY_HASHTAG) {
     return false;
   }
   return true;
 }
 
-function validateHastag (valueHastagInput) {
-  const hastags = valueHastagInput.trim().split(' ');
+function validateHashtag (valueHashtagInput) {
+  const hashtags = valueHashtagInput.trim().split(' ');
 
-  for (let i = 0; i < hastags.length; i++) {
-    if (hastags[i] && !HASTAG.test(hastags[i])) {
+  for (let i = 0; i < hashtags.length; i++) {
+    if (hashtags[i] && !HASHTAG.test(hashtags[i])) {
       return false;
     }
   }
   return true;
 }
 
-function handlerFocusEsc (evt) {
+function focusKeydownHandler (evt) {
   if (isEscapeKey(evt)) {
     evt.stopPropagation();
   }
 }
-hastagInput.addEventListener('keydown', handlerFocusEsc);
+hashtagInputNode.addEventListener('keydown', focusKeydownHandler);
 
-pristine.addValidator(hastagInput,validateHastag, 'Неккоректное значение');
-pristine.addValidator(hastagInput,validateHastagMaxQuantity, `Хэштегов не должно быть больше ${MAX_QUANTITY_HASTAG}!`);
-pristine.addValidator(hastagInput,validateHastagRepeat, 'Хэштеги не должны повторяться!');
+pristine.addValidator(hashtagInputNode,validateHashtag, 'Неккоректное значение');
+pristine.addValidator(hashtagInputNode,validateHashtagMaxQuantity, `Хэштегов не должно быть больше ${MAX_QUANTITY_HASHTAG}!`);
+pristine.addValidator(hashtagInputNode,validateHashtagRepeat, 'Хэштеги не должны повторяться!');
 
-commentInput.addEventListener('keydown', handlerFocusEsc);
+commentInput.addEventListener('keydown', focusKeydownHandler);
 
 function clearForm () {
-  form.reset();
+  formNode.reset();
   pristine.validate();
 }
 
 function formSubmit (onSuccess) {
-  form.addEventListener('submit', (evt) => {
+  formNode.addEventListener('submit', (evt) => {
     evt.preventDefault();
     pristine.validate();
     const isValid = pristine.validate();
@@ -97,7 +97,7 @@ function formSubmit (onSuccess) {
       sendData(formData)
         .then(onSuccess)
         .then(() => {
-          form.reset();
+          formNode.reset();
         })
         .then(() => {
           showSuccessMessageBigPicture();
