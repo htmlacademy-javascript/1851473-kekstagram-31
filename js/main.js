@@ -17,7 +17,5 @@ getData()
   });
 
 
-
-
 onOpenPopupForm();
 formSubmit(closeFilterImg);

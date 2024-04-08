@@ -7,6 +7,7 @@ const FILE_TYPES = ['jpg', 'jpeg', 'png'];
 const btnDownloaderImg = document.querySelector('.img-upload__input');
 const btnCloseFilterImg = document.querySelector('.img-upload__cancel');
 const imagePreview = document.querySelector('.img-upload__preview img');
+const effectsImagePreview = document.querySelectorAll('.effects__preview');
 
 function onOpenPopupForm () {
   btnDownloaderImg.addEventListener('change', () => {
@@ -15,6 +16,9 @@ function onOpenPopupForm () {
     const matches = FILE_TYPES.some((it) => fileName.endsWith(it));
     if (matches) {
       imagePreview.src = URL.createObjectURL(file);
+      effectsImagePreview.forEach((pictures) => {
+        pictures.style.backgroundImage = `url(${imagePreview.src})`;
+      });
     }
     document.querySelector('.img-upload__overlay').classList.remove('hidden');
     document.querySelector('body').classList.add('modal-open');
@@ -33,7 +37,7 @@ function closeFilterImg () {
   btnDownloaderImg.value = '';
   removeSizeImage();
   removeFilterRangeSlider();
-  clearForm()
+  clearForm();
 }
 
 function handlerEscKeydown (evt) {

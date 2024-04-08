@@ -51,8 +51,8 @@ const randomFilter = function (pictures) {
     const pictureCollection = document.querySelectorAll('.picture');
     for (let i = 0; i < pictureCollection.length; i++) {
       pictureCollection[i].remove();
-      createPictures(pictures);
     }
+    createPictures(pictures);
   }, RERENDER_DELAY);
   btnFilterDefault.addEventListener('click', () => {
     setActiveBtn(btnFilterDefault);
