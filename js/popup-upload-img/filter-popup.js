@@ -1,26 +1,30 @@
 import {isEscapeKey} from '../util.js';
 import {clearForm} from './validate-form.js';
-import {onSizeImage, removeSizeImage} from './change-size-image.js';
+import {changeSizeImage, removeSizeImage} from './change-size-image.js';
 import {filterRangeSlider, removeFilterRangeSlider} from './create-slider.js';
 
 const FILE_TYPES = ['jpg', 'jpeg', 'png'];
-const btnDownloaderImg = document.querySelector('.img-upload__input');
-const btnCloseFilterImg = document.querySelector('.img-upload__cancel');
-const imagePreview = document.querySelector('.img-upload__preview img');
+const btnDownloaderImgNode = document.querySelector('.img-upload__input');
+const btnCloseFilterImgNode = document.querySelector('.img-upload__cancel');
+const imagePreviewNode = document.querySelector('.img-upload__preview img');
+const EffectsimagePreviewNode = document.querySelectorAll('.effects__preview');
 
-function onOpenPopupForm () {
-  btnDownloaderImg.addEventListener('change', () => {
-    const file = btnDownloaderImg.files[0];
+function openPopupForm () {
+  btnDownloaderImgNode.addEventListener('change', () => {
+    const file = btnDownloaderImgNode.files[0];
     const fileName = file.name.toLowerCase();
     const matches = FILE_TYPES.some((it) => fileName.endsWith(it));
     if (matches) {
-      imagePreview.src = URL.createObjectURL(file);
+      imagePreviewNode.src = URL.createObjectURL(file);
+      EffectsimagePreviewNode.forEach((pictures) => {
+        pictures.style.backgroundImage = `url(${imagePreviewNode.src})`;
+      });
     }
     document.querySelector('.img-upload__overlay').classList.remove('hidden');
     document.querySelector('body').classList.add('modal-open');
-    document.addEventListener('keydown', handlerEscKeydown);
-    btnCloseFilterImg.addEventListener('click', closeFilterImg);
-    onSizeImage();
+    document.addEventListener('keydown', escKeydownHandler);
+    btnCloseFilterImgNode.addEventListener('click', btnCloseFilterImgClickHandler);
+    changeSizeImage();
     filterRangeSlider();
   });
 }
@@ -28,21 +32,25 @@ function onOpenPopupForm () {
 function closeFilterImg () {
   document.querySelector('.img-upload__overlay').classList.add('hidden');
   document.querySelector('body').classList.remove('modal-open');
-  document.removeEventListener('keydown', handlerEscKeydown);
-  btnCloseFilterImg.removeEventListener('click', closeFilterImg);
-  btnDownloaderImg.value = '';
+  document.removeEventListener('keydown', escKeydownHandler);
+  btnCloseFilterImgNode.removeEventListener('click', btnCloseFilterImgClickHandler);
+  btnDownloaderImgNode.value = '';
   removeSizeImage();
   removeFilterRangeSlider();
-  clearForm()
+  clearForm();
 }
 
-function handlerEscKeydown (evt) {
-  const modalError = document.querySelector('.error');
-  if (isEscapeKey(evt) && !modalError) {
+function btnCloseFilterImgClickHandler () {
+  closeFilterImg();
+}
+
+function escKeydownHandler (evt) {
+  const modalErrorNode = document.querySelector('.error');
+  if (isEscapeKey(evt) && !modalErrorNode) {
     evt.preventDefault();
     closeFilterImg();
   }
 }
 
-export {onOpenPopupForm, closeFilterImg};
+export {openPopupForm, closeFilterImg};
 

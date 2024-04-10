@@ -26,8 +26,8 @@ function createRandomIdFromRangeGenerator (min, max) {
 
 // достаёт рандомный элемент массива
 function getRandomArrayElement(array) {
-  const i = getRandomInteger(0, array.length - 1);
-  return array[i];
+  const index = getRandomInteger(0, array.length - 1);
+  return array[index];
 }
 
 const isEscapeKey = (evt) => evt.key === 'Escape';

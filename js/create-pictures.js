@@ -1,28 +1,28 @@
 import {openPopup} from './popup-big-picture.js';
 
-function createPictures (arr) {
+function createPictures (pictures) {
 
-  const templatePicture = document.querySelector('#picture').content;
+  const templatePictureNode = document.querySelector('#picture').content;
   const fragment = document.createDocumentFragment();
-  const templateLink = templatePicture.querySelector('.picture');
-  const pictures = document.querySelector('.pictures');
+  const templateLinkNode = templatePictureNode.querySelector('.picture');
+  const wrapperPictureNode = document.querySelector('.pictures');
 
 
-  arr.forEach((item) => {
-    const elementLink = templateLink.cloneNode(true);
+  pictures.forEach((picture) => {
+    const elementLink = templateLinkNode.cloneNode(true);
     elementLink.addEventListener('click', () => {
-      openPopup(item);
+      openPopup(picture);
     });
-    const image = elementLink.querySelector('.picture__img');
-    const like = elementLink.querySelector('.picture__likes');
-    const comment = elementLink.querySelector('.picture__comments');
-    image.src = item.url;
-    image.alt = item.description;
-    like.textContent = item.likes;
-    comment.textContent = item.comments.length;
+    const imageNode = elementLink.querySelector('.picture__img');
+    const likeNode = elementLink.querySelector('.picture__likes');
+    const commentNode = elementLink.querySelector('.picture__comments');
+    imageNode.src = picture.url;
+    imageNode.alt = picture.description;
+    likeNode.textContent = picture.likes;
+    commentNode.textContent = picture.comments.length;
     fragment.appendChild(elementLink);
   });
 
-  pictures.appendChild(fragment);
+  wrapperPictureNode.appendChild(fragment);
 }
 export {createPictures};

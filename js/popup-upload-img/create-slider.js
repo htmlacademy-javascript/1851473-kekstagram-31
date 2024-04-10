@@ -1,8 +1,8 @@
-const sliderElement = document.querySelector('.effect-level__slider');
-const sliderInput = document.querySelector('.effect-level__value');
-const filtersRadio = document.querySelectorAll('.effects__radio');
-const imagePreview = document.querySelector('.img-upload__preview img');
-const rangeFilter = document.querySelector('.img-upload__effect-level');
+const sliderNode = document.querySelector('.effect-level__slider');
+const sliderInputNode = document.querySelector('.effect-level__value');
+const FiltersRadioNode = document.querySelectorAll('.effects__radio');
+const imagePreviewNode = document.querySelector('.img-upload__preview img');
+const rangeFilterNode = document.querySelector('.img-upload__effect-level');
 const Filters = {
   chrome: {
     range: {
@@ -58,7 +58,7 @@ const Filters = {
 
 
 function filterRangeSlider () {
-  noUiSlider.create(sliderElement, {
+  noUiSlider.create(sliderNode, {
     range: {
       min: 0,
       max: 1,
@@ -81,7 +81,7 @@ function filterRangeSlider () {
 
   function reloadValueSlider (filterStyleString) {
     const filterStyle = Filters[filterStyleString];
-    sliderElement.noUiSlider.updateOptions({
+    sliderNode.noUiSlider.updateOptions({
       range: {
         min: filterStyle.range.min,
         max: filterStyle.range.max,
@@ -89,25 +89,25 @@ function filterRangeSlider () {
       start: filterStyle.start,
       step: filterStyle.step
     });
-    sliderElement.noUiSlider.on('update', () => {
-      sliderInput.value = sliderElement.noUiSlider.get();
-      imagePreview.style.filter = `${filterStyle.filter}(${sliderInput.value}${filterStyle.unit})`;
+    sliderNode.noUiSlider.on('update', () => {
+      sliderInputNode.value = sliderNode.noUiSlider.get();
+      imagePreviewNode.style.filter = `${filterStyle.filter}(${sliderInputNode.value}${filterStyle.unit})`;
     });
-    rangeFilter.classList.remove('hidden');
+    rangeFilterNode.classList.remove('hidden');
   }
 
-  rangeFilter.classList.add('hidden');
+  rangeFilterNode.classList.add('hidden');
 
-  sliderElement.noUiSlider.on('update', () => {
-    sliderInput.value = sliderElement.noUiSlider.get();
+  sliderNode.noUiSlider.on('update', () => {
+    sliderInputNode.value = sliderNode.noUiSlider.get();
   });
 
-  filtersRadio.forEach((filterRadio) => {
+  FiltersRadioNode.forEach((filterRadio) => {
     filterRadio.addEventListener('change', () => {
       const nameEffect = filterRadio.value;
       if (nameEffect === 'none') {
-        imagePreview.style.filter = null;
-        rangeFilter.classList.add('hidden');
+        imagePreviewNode.style.filter = null;
+        rangeFilterNode.classList.add('hidden');
       } else {
         reloadValueSlider(nameEffect);
       }
@@ -116,8 +116,8 @@ function filterRangeSlider () {
 }
 
 function removeFilterRangeSlider () {
-  sliderElement.noUiSlider.destroy();
-  imagePreview.style.filter = null;
+  sliderNode.noUiSlider.destroy();
+  imagePreviewNode.style.filter = null;
 }
 
 export {filterRangeSlider, removeFilterRangeSlider};
