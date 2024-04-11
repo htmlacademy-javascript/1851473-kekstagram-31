@@ -3,14 +3,14 @@ const MAX_VALUE_RANGE = 100;
 const btnSmallSizeNode = document.querySelector('.scale__control--smaller');
 const btnBigSizeNode = document.querySelector('.scale__control--bigger');
 const sizeInputNode = document.querySelector('.scale__control--value');
-const imgUploadPreviewNode = document.querySelector('.img-upload__preview');
+const imgUploadPreviewNode = document.querySelector('.img-upload__preview img');
 
 function changeSizeImage () {
-  btnBigSizeNode.addEventListener('click', BtnBigClickHandler);
-  btnSmallSizeNode.addEventListener('click', BtnSmallClickHandler);
+  btnBigSizeNode.addEventListener('click', btnBigClickHandler);
+  btnSmallSizeNode.addEventListener('click', btnSmallClickHandler);
 }
 
-function BtnBigClickHandler () {
+function btnBigClickHandler () {
   let inputValue = Number(sizeInputNode.value.replace('%', ''));
   inputValue += STEP;
   if (inputValue > MAX_VALUE_RANGE) {
@@ -21,7 +21,7 @@ function BtnBigClickHandler () {
   imgUploadPreviewNode.style.transform = `scale(${inputValue / MAX_VALUE_RANGE})`;
 }
 
-function BtnSmallClickHandler () {
+function btnSmallClickHandler () {
   let inputValue = Number(sizeInputNode.value.replace('%', ''));
   inputValue -= STEP;
   if (inputValue < STEP) {
@@ -33,8 +33,8 @@ function BtnSmallClickHandler () {
 }
 
 function removeSizeImage () {
-  btnSmallSizeNode.removeEventListener('click', BtnSmallClickHandler);
-  btnBigSizeNode.removeEventListener('click', BtnBigClickHandler);
+  btnSmallSizeNode.removeEventListener('click', btnSmallClickHandler);
+  btnBigSizeNode.removeEventListener('click', btnBigClickHandler);
   imgUploadPreviewNode.style.transform = '';
 }
 

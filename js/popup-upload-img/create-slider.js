@@ -1,6 +1,6 @@
 const sliderNode = document.querySelector('.effect-level__slider');
 const sliderInputNode = document.querySelector('.effect-level__value');
-const FiltersRadioNode = document.querySelectorAll('.effects__radio');
+const filtersRadioNode = document.querySelectorAll('.effects__radio');
 const imagePreviewNode = document.querySelector('.img-upload__preview img');
 const rangeFilterNode = document.querySelector('.img-upload__effect-level');
 const Filters = {
@@ -102,7 +102,7 @@ function filterRangeSlider () {
     sliderInputNode.value = sliderNode.noUiSlider.get();
   });
 
-  FiltersRadioNode.forEach((filterRadio) => {
+  filtersRadioNode.forEach((filterRadio) => {
     filterRadio.addEventListener('change', () => {
       const nameEffect = filterRadio.value;
       if (nameEffect === 'none') {
