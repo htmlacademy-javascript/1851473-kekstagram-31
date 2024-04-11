@@ -7,7 +7,9 @@ const FILE_TYPES = ['jpg', 'jpeg', 'png'];
 const btnDownloaderImgNode = document.querySelector('.img-upload__input');
 const btnCloseFilterImgNode = document.querySelector('.img-upload__cancel');
 const imagePreviewNode = document.querySelector('.img-upload__preview img');
-const EffectsimagePreviewNode = document.querySelectorAll('.effects__preview');
+const effectsImagePreviewNode = document.querySelectorAll('.effects__preview');
+const imgUploadOverlayNode = document.querySelector('.img-upload__overlay');
+const bodyNode = document.querySelector('body');
 
 function openPopupForm () {
   btnDownloaderImgNode.addEventListener('change', () => {
@@ -16,12 +18,12 @@ function openPopupForm () {
     const matches = FILE_TYPES.some((it) => fileName.endsWith(it));
     if (matches) {
       imagePreviewNode.src = URL.createObjectURL(file);
-      EffectsimagePreviewNode.forEach((pictures) => {
+      effectsImagePreviewNode.forEach((pictures) => {
         pictures.style.backgroundImage = `url(${imagePreviewNode.src})`;
       });
     }
-    document.querySelector('.img-upload__overlay').classList.remove('hidden');
-    document.querySelector('body').classList.add('modal-open');
+    imgUploadOverlayNode.classList.remove('hidden');
+    bodyNode.classList.add('modal-open');
     document.addEventListener('keydown', escKeydownHandler);
     btnCloseFilterImgNode.addEventListener('click', btnCloseFilterImgClickHandler);
     changeSizeImage();
@@ -30,8 +32,8 @@ function openPopupForm () {
 }
 
 function closeFilterImg () {
-  document.querySelector('.img-upload__overlay').classList.add('hidden');
-  document.querySelector('body').classList.remove('modal-open');
+  imgUploadOverlayNode.classList.add('hidden');
+  bodyNode.classList.remove('modal-open');
   document.removeEventListener('keydown', escKeydownHandler);
   btnCloseFilterImgNode.removeEventListener('click', btnCloseFilterImgClickHandler);
   btnDownloaderImgNode.value = '';

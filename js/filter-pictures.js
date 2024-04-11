@@ -3,6 +3,7 @@ import {createPictures} from './create-pictures.js';
 
 const MIN_RANDOM_NUMBER = 0;
 const MAX_RANDOM_NUMBER = 24;
+const MAX_RANDOM_PICTURE = 10;
 const RERENDER_DELAY = 500;
 const btnFilterDefaultNode = document.querySelector('#filter-default');
 const btnFilterRandomNode = document.querySelector('#filter-random');
@@ -22,9 +23,9 @@ const sortByComments = function (picturesA, picturesB) {
 const randomFilter = function (pictures) {
   document.querySelector('.img-filters').classList.remove('img-filters--inactive');
   const debouncedFilterRandom = debounce(() => {
-    const PicturesCollection = document.querySelectorAll('.picture');
-    for (let i = 0; i < PicturesCollection.length; i++) {
-      PicturesCollection[i].remove();
+    const picturesCollection = document.querySelectorAll('.picture');
+    for (let i = 0; i < picturesCollection.length; i++) {
+      picturesCollection[i].remove();
     }
     const randomPictures = createRandomNoRepeatFilter(pictures);
     createPictures(randomPictures);
@@ -35,9 +36,9 @@ const randomFilter = function (pictures) {
   });
 
   const debouncedFilterDiscussed = debounce(() => {
-    const PicturesCollection = document.querySelectorAll('.picture');
-    for (let i = 0; i < PicturesCollection.length; i++) {
-      PicturesCollection[i].remove();
+    const picturesCollection = document.querySelectorAll('.picture');
+    for (let i = 0; i < picturesCollection.length; i++) {
+      picturesCollection[i].remove();
     }
     const sortPictures = pictures.slice(0).sort(sortByComments);
     createPictures(sortPictures);
@@ -48,9 +49,9 @@ const randomFilter = function (pictures) {
   });
 
   const debouncedFilterDefault = debounce(() => {
-    const PicturesCollection = document.querySelectorAll('.picture');
-    for (let i = 0; i < PicturesCollection.length; i++) {
-      PicturesCollection[i].remove();
+    const picturesCollection = document.querySelectorAll('.picture');
+    for (let i = 0; i < picturesCollection.length; i++) {
+      picturesCollection[i].remove();
     }
     createPictures(pictures);
   }, RERENDER_DELAY);
@@ -63,7 +64,7 @@ const randomFilter = function (pictures) {
 function createRandomNoRepeatFilter (pictures) {
   const randomNoRepeat = createRandomIdFromRangeGenerator(MIN_RANDOM_NUMBER, MAX_RANDOM_NUMBER);
   const newPictures = [];
-  for (let i = 0; i < 10; i++) {
+  for (let i = 0; i < MAX_RANDOM_PICTURE; i++) {
     const randomNumber = randomNoRepeat();
     newPictures.push(pictures[randomNumber]);
   }
